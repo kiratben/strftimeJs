@@ -19,7 +19,31 @@
 				r: '%I:%M:%S %p',
 				T: '%H:%M:%S'
 			}
+		},
+		cDate,
+		cDateId,
+		cDateReset = function () {
+			cDateId = void 0;
 		};
 
+	var strftime = function strftime(format, date, locale, options) {
+		var ts;
+
+		if (!(date instanceof Date)) {
+			locale = date;
+
+			if (cDateId === void 0) {
+				cDate = new Date();
+				cDate.time = cDate.getTime();
+				cDateId = setTimeout(cDateReset, 1);
+			}
+
+			date = cDate;
+			ts = cDate.time
+		}
+		else {
+			ts = date.getTime();
+		}
+};
 
 })();
