@@ -24,10 +24,15 @@
 		cDateId,
 		cDateReset = function () {
 			cDateId = void 0;
+		},
+		cache = { 
+			ts: null, 
+			format: null, 
+			value: null 
 		};
 
 	var strftime = function strftime(format, date, locale, options) {
-		var ts;
+		var ts,uCache;
 
 		if (!(date instanceof Date)) {
 			locale = date;
@@ -43,6 +48,20 @@
 		}
 		else {
 			ts = date.getTime();
+		}
+		
+		uCache = locale == void 0 && options == void 0;
+
+		if (uCache) {
+			if (cache.ts === ts && cache.format === format) {
+				return cache.value;
+			}
+			else {
+				var cached = cache[format];
+				if (cached !== void 0 && cached[0] === ts) {
+					return cached[1];
+				}
+			}
 		}
 };
 
