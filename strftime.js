@@ -63,6 +63,26 @@
 				}
 			}
 		}
+
+		if (locale == void 0) {
+
+			locale = defaultLocale;
+		}
+
+
+	var tzone,utc;
+
+		if (options) {
+			tzone = options.timezone; utc = options.utc;
+
+			if (utc || tzone !== void 0) date = new Date(ts + date.getTimezoneOffset() * 6e4);
+		
+			if (tzone !== void 0) { 
+				if (tzone.substr !== void 0) tzone = (tzone[0] === '-' ? -1 : 1) * (60 * tzone.substr(1, 2)) + (tzone.substr(3, 2)|0);
+			
+				date = new Date(date.getTime() + (tzone * 6e4));
+			}
+		}
 };
 
 })();
