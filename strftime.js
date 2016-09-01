@@ -1,6 +1,6 @@
 (function () {
 	'use strict';
-
+	//default locale
 	var defaultLocale = {
 			days: 'Sunday Monday Tuesday Wednesday Thursday Friday Saturday'.split(' '),
 			shortDays: 'Sun Mon Tue Wed Thu Fri Sat'.split(' '),
@@ -24,7 +24,8 @@
 		cDateId,
 		cDateReset = function () {
 			cDateId = void 0;
-		},
+		}, 
+		//Cache last call
 		cache = { 
 			ts: null, 
 			format: null, 
@@ -51,7 +52,7 @@
 		}
 		
 		uCache = locale == void 0 && options == void 0;
-
+		//Caching will only work if the locale is not transferred 
 		if (uCache) {
 			if (cache.ts === ts && cache.format === format) {
 				return cache.value;
@@ -63,7 +64,7 @@
 				}
 			}
 		}
-
+		//Déterminer les paramètres régionaux
 		if (locale == void 0) {
 
 			locale = defaultLocale;
