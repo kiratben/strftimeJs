@@ -71,7 +71,7 @@
 		}
 
 
-	var tzone,utc;
+	var tzone,utc,ch,res,pad;
 
 		if (options) {
 			tzone = options.timezone; utc = options.utc;
@@ -82,6 +82,32 @@
 				if (tzone.substr !== void 0) tzone = (tzone[0] === '-' ? -1 : 1) * (60 * tzone.substr(1, 2)) + (tzone.substr(3, 2)|0);
 			
 				date = new Date(date.getTime() + (tzone * 6e4));
+			}
+		}
+
+			//Pars format
+		for (var i = 0, l = format.length; i < l; i++) {
+			ch = format.charAt(i);
+
+			if (ch === '%') { 
+				ch = format.charAt(++i);
+
+				if (ch === '-') {
+					ch = format.charAt(++i);
+					pad = '';
+				} else if (ch === '_') {
+					ch = format.charAt(++i);
+					pad = ' ';
+				} else if (ch === '0') {
+					ch = format.charAt(++i);
+					pad = '0';
+				} else {
+					pad = (ch === 'k' || ch === 'l') ? ' ' : '0';
+				}
+
+			}
+			else {
+				res += ch;
 			}
 		}
 };
