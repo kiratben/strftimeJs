@@ -29,7 +29,7 @@
 		cache = { 
 			ts: null, 
 			format: null, 
-			value: null 
+			val: null 
 		};
 
 	var strftime = function strftime(format, date, locale, options) {
@@ -110,6 +110,16 @@
 				res += ch;
 			}
 		}
+
+			if (uCache) {
+			cache.ts = ts;
+			cache.format = format;
+			cache.val = res;
+			cache[format] = [ts, res];
+		}
+
+
+		return res;
 };
 
 })();
