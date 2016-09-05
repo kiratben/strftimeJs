@@ -122,4 +122,25 @@
 		return res;
 };
 
+	//Generate formatting rules
+	var formats = {
+		'A': { val: 'days[getDay]' },
+		'a': { val: 'shortDays[getDay]' },
+
+		'B': { val: 'months[getMonth]' },
+		'b': { val: 'shortMonths[getMonth]' },
+
+		'C': { val: 'Math.floor(getFullYear / 100)', pad: 2 },
+		'D': { val: 'strftime(locale.formats.D || "%m/%d/%y", date, locale)' },
+
+		'd': { val: 'getDate', pad: 2 },
+		'e': { val: 'getDate' },
+
+		'F': { val: 'strftime(locale.formats.F || "%Y-%m-%d", date, locale)' },
+
+		'H': { val: 'getHours', pad: 2 },
+		'h': { val: 'shortMonths[getMonth]' },
+		'I': { val: '(val = getHours, val === 0) ? 12 : (val > 12 ? val - 12 : val)', pad: 2 },
+}
+
 })();
