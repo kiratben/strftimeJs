@@ -141,6 +141,23 @@
 		'H': { val: 'getHours', pad: 2 },
 		'h': { val: 'shortMonths[getMonth]' },
 		'I': { val: '(val = getHours, val === 0) ? 12 : (val > 12 ? val - 12 : val)', pad: 2 },
+		'j': {
+			code: function (date, val) { 
+				var firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+				val = Math.ceil((date.getTime() - firstDayOfYear.getTime()) / (1000 * 60 * 60 * 24));
+			},
+			pad: 3
+		},
+
+		'k': { val: 'getHours', pad: 2 },
+
+		'L': { val: 'Math.floor(ts % 1000)', pad: 3 },
+		'l': { val: '(val = getHours, val === 0) ? 12 : (val > 12 ? val - 12 : val)', pad: 2 },
+
+		'M': { val: 'getMinutes', pad: 2 },
+		'm': { val: 'getMonth + 1', pad: 2 },
+
+		'n': { val: '"\\n"' },
 }
 
 })();
