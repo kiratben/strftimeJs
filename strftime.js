@@ -158,6 +158,31 @@
 		'm': { val: 'getMonth + 1', pad: 2 },
 
 		'n': { val: '"\\n"' },
+			val = date.getDate();
+			var x = val % 10, y = val % 100;
+
+			if ((y >= 11 && y <= 13) || x === 0 || x >= 4) {
+				val += 'th';
+			} else if (x === 1) {
+				val += 'st';
+			} else if (x === 2) {
+				val += 'nd';
+			} else if (x === 3) {
+				val += 'rd';
+			}
+		},
+
+		'P': { val: 'getHours < 12 ? locale.am : locale.pm' },
+		'p': { val: 'getHours < 12 ? locale.AM : locale.PM' },
+
+		'R': { val: 'strftime(locale.formats.R || "%H:%M", date, locale)' },
+		'r': { val: 'strftime(locale.formats.r || "%I:%M:%S %p", date, locale)' },
+
+		'S': { val: 'getSeconds', pad: 2 },
+		's': { val: 'Math.floor(ts / 1000)' },
+
+		'T': { val: 'strftime(locale.formats.T || "%H:%M:%S", date, locale)' },
+		't': { val: '"\\t"' }
 }
 
 })();
