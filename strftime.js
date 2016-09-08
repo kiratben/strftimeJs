@@ -158,6 +158,7 @@
 		'm': { val: 'getMonth + 1', pad: 2 },
 
 		'n': { val: '"\\n"' },
+		'o': function (date, val) { 
 			val = date.getDate();
 			var x = val % 10, y = val % 100;
 
@@ -182,7 +183,35 @@
 		's': { val: 'Math.floor(ts / 1000)' },
 
 		'T': { val: 'strftime(locale.formats.T || "%H:%M:%S", date, locale)' },
-		't': { val: '"\\t"' }
+		't': { val: '"\\t"' },
+
+		'U': function (date, ts, val) {
+			var wday = date.getDay(),
+				firstDayOfYear = new Date(date.getFullYear(), 0, 1),
+				yday = (ts - firstDayOfYear.getTime()) / 86400000,
+				weekNum = (yday + 7 - wday) / 7
+			;
+
+			val = Math.floor(weekNum);
+		},
+
+		'u': { val: '(val = getDay, val === 0) ? 7 : val' },
+
+		'v': { val: 'strftime(locale.formats.v || "%e-%b-%Y", date, locale)' },
+
+		'W': function (date, ts, val) {
+			var wday = date.getDay();
+			wday = (wday === 0) ? 6 : wday - 1;
+
+			var firstDayOfYear = new Date(date.getFullYear(), 0, 1),
+				yday = (ts - firstDayOfYear) / 86400000,
+				weekNum = (yday + 7 - wday) / 7
+			;
+			val = Math.floor(weekNum);
+		},
+
+		'w': { val: 'getDay' }
+
 }
 
 })();
