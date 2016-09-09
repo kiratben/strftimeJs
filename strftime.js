@@ -212,6 +212,22 @@
 
 		'w': { val: 'getDay' }
 
-}
+		'Y': { val: 'getFullYear' },
+		'y': { val: '(getFullYear + "").substr(-2, 2)' },
+
+		'Z': { val: 'utc ? "GMT" : date.toString().match(/\\((\\w+)\\)/) && RegExp.$1 || ""' },
+		'z': function (date, utc, tzone, val) {
+			if (utc) {
+				val = "+0000";
+			} else {
+				var off = typeof tzone === 'number' ? tzone : -date.getTimezoneOffset(),
+					hours = Math.abs(off / 60),
+					mins = off % 60
+				;
+				val = (off < 0 ? '-' : '+') + (hours > 9 ? hours : '0' + hours) + (mins > 9 ? mins : '0' + mins);
+			}
+		}
+
+};
 
 })();
