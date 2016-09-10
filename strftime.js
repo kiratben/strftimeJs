@@ -71,7 +71,7 @@
 		}
 
 
-	var tzone,utc,ch,res,pad;
+	var tzone,utc,ch,res,padd;
 
 		if (options) {
 			tzone = options.timezone; utc = options.utc;
@@ -94,15 +94,15 @@
 
 				if (ch === '-') {
 					ch = format.charAt(++i);
-					pad = '';
+					padd = '';
 				} else if (ch === '_') {
 					ch = format.charAt(++i);
-					pad = ' ';
+					padd = ' ';
 				} else if (ch === '0') {
 					ch = format.charAt(++i);
-					pad = '0';
+					padd = '0';
 				} else {
-					pad = (ch === 'k' || ch === 'l') ? ' ' : '0';
+					padd = (ch === 'k' || ch === 'l') ? ' ' : '0';
 				}
 
 			}
@@ -229,5 +229,30 @@
 		}
 
 };
+for (var m in formats) {
+		var format = formats[m],
+			code = format.code || format,
+			val = format.val,
+			pad = format.pad,
+			body = ''
+		;
 
+		if (code instanceof Function) {
+			body += code.toString().match(/\{([\s\S]+)\}/)[1];
+			val = "val";
+		}
+		else {
+			val = format.val.replace(/\b(get\w+)/i, 'date.$1()');
+		}
+		
+		body += (pad === 3
+			? ("val = " + val + ";res += val > 99 ? val : (val > 9 ? padd + val : padd * 2 + val);")
+			: (pad === 2
+				? ("val = " + val + ";res += val > 9 ? val : padd + val;")
+				: "res += " + val + ";"
+			)
+		);
+
+		ifs.push("if (char === '" + m + "') {" + body + "}");
+	}
 })();
