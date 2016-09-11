@@ -123,6 +123,7 @@
 };
 
 	//Generate formatting rules
+	var ifs = [];
 	var formats = {
 		'A': { val: 'days[getDay]' },
 		'a': { val: 'shortDays[getDay]' },
@@ -253,6 +254,7 @@ for (var m in formats) {
 			)
 		);
 
-		ifs.push("if (char === '" + m + "') {" + body + "}");
+		ifs.push("if (ch === '" + m + "') {" + body + "}");
 	}
+	ifs.push("{ res += ch; }");
 })();
