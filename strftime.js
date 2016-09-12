@@ -257,4 +257,27 @@ for (var m in formats) {
 		ifs.push("if (ch === '" + m + "') {" + body + "}");
 	}
 	ifs.push("{ res += ch; }");
+
+	strftime = (new  Function(
+		'cache,defaultLocale,cDate,cDateId,cDateReset',
+		'return ' + strftime.toString().replace('/*formats*/', ifs.join(' else '))
+	))(cache, defaultLocale, cdDate, cDateId, cDateReset);
+	
+	module.exports = {
+		strftime: strftime,
+
+		strftimeUTC: function (format, date, locale) {
+			return strftime(format, date, locale, { utc: true });
+		},
+
+		strftimeTZ: function (date, format, locale, timezone) {
+			if (!(locale instanceof Object)) {
+				timezone = locale;
+				locale = void 0;
+			}
+
+			return strftime(date, format, locale, { timezone: timezone });
+		}
+	};
+
 })();
